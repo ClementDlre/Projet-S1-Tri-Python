@@ -1,0 +1,55 @@
+
+def Empiler(liste1,n):
+    liste1.append(n) #We put the e value in the a list and return the list
+    return liste1
+
+def estVide(liste2):
+    return len(liste2) == 0 #It returns True if the length of p list is null and False if it's not
+
+def Depiler(liste2):
+    if (not  estVide(liste2)): #if the length of p list isn't null, we pop the last value of p list and return the list
+        return liste2.pop()
+        
+
+def EstSommet(liste2):
+    if (not estVide(liste2)): #if the length of p list isn't null, we return the last value of p list
+        return liste2[len(liste2)-1] 
+
+def InitPile(): #We initialise a list without value in it
+    return []
+
+def TriePile(liste1):
+    liste3 = [] #We initialise a list without value in it
+    liste4 = [] #We initialise a list values in it
+    while not(estVide(liste4) and estVide(liste1)): #while a list and c list aren't empty
+
+        if estVide(liste1): #if a is empty
+            for i in range(len(liste4)): 
+                Empiler(liste1, Depiler(liste4)) #we put every values of c in a
+            Empiler(liste3, Depiler(liste1)) #and after we put the last value of a in b
+        #or
+        elif not estVide(liste1): #if a isn't empty
+
+            if estVide(liste3): #and if b is empty
+                Empiler(liste3, Depiler(liste1)) #we put the last value of a in b
+            #or
+            else: #if b isn't empty
+
+                if EstSommet(liste1)>EstSommet(liste3): #and if the last value of a list is superior to the last value of b list
+                    Empiler(liste4, Depiler(liste3)) #we put the last value of b in c
+                    Empiler(liste3, Depiler(liste1)) #and we put the last value of a in b
+                #or
+                else: #if the last value of a list isn't superior to the last value of b
+                    Empiler(liste4, Depiler(liste1)) #we put the last value of a in c
+    return liste3 #and we return the b list if the wile condition is finish
+
+
+
+liste1 = InitPile()
+Empiler(liste1, 3)
+Empiler(liste1, 2)
+Empiler(liste1, 4)
+liste3 = TriePile(liste1)
+while not estVide(liste3):
+    print(EstSommet(liste3))
+    Depiler(liste3)
